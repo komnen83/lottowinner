@@ -1,38 +1,64 @@
+
 package pl.sda.model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Games {
 
-    @SerializedName("Lotto")
+    @SerializedName("totalRows")
     @Expose
-    private Lotto lotto;
-    @SerializedName("Mini")
+    private int totalRows;
+    @SerializedName("items")
     @Expose
-    private Mini mini;
+    private List<Item> items = null;
+    @SerializedName("meta")
+    @Expose
+    private Meta meta;
+    @SerializedName("code")
+    @Expose
+    private int code;
 
-    public Lotto getLotto() {
-        return lotto;
+    public int getTotalRows() {
+        return totalRows;
     }
 
-    public void setLotto(Lotto lotto) {
-        this.lotto = lotto;
+    public void setTotalRows(int totalRows) {
+        this.totalRows = totalRows;
     }
 
-    public Mini getMini() {
-        return mini;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setMini(Mini mini) {
-        this.mini = mini;
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public Meta getMeta() {
+        return meta;
+    }
+
+    public void setMeta(Meta meta) {
+        this.meta = meta;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     @Override
     public String toString() {
         return "Games{" +
-                "lotto=" + lotto +
-                ", mini=" + mini +
+                "totalRows=" + totalRows +
+                ", items=" + items +
+                ", meta=" + meta +
+                ", code=" + code +
                 '}';
     }
 }
