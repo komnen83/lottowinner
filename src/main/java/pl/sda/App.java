@@ -16,7 +16,6 @@ public class App {
 
     public static void main(String[] args) throws IOException {
         //https://www.lotto.pl/api/lotteries/draw-results/by-gametype?game=Lotto&index=1&size=15&sort=drawDate&order=DESC
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
