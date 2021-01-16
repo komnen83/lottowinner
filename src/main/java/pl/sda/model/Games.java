@@ -1,6 +1,7 @@
 
 package pl.sda.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ public class Games {
     private int totalRows;
     @SerializedName("items")
     @Expose
-    private List<Item> items = null;
+    private List<Item> items = new ArrayList<Item>();
     @SerializedName("meta")
     @Expose
     private Meta meta;
@@ -52,13 +53,4 @@ public class Games {
         this.code = code;
     }
 
-    @Override
-    public String toString() {
-        return "Games{" +
-                "totalRows=" + totalRows +
-                ", items=" + items +
-                ", meta=" + meta +
-                ", code=" + code +
-                '}';
-    }
 }

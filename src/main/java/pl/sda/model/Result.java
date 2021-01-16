@@ -1,11 +1,12 @@
 
 package pl.sda.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
@@ -23,7 +24,7 @@ public class Result {
     private List<Integer> numbers = new ArrayList<>();
     @SerializedName("specialResults")
     @Expose
-    private List<Object> specialResults = null;
+    private List<Object> specialResults = new ArrayList<Object>();
 
     public LocalDateTime getDrawDate() {
         return drawDate;
@@ -65,14 +66,4 @@ public class Result {
         this.specialResults = specialResults;
     }
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                "drawDate='" + drawDate + '\'' +
-                ", drawSystemId=" + drawSystemId +
-                ", gameType='" + gameType + '\'' +
-                ", resultsJson=" + numbers +
-                ", specialResults=" + specialResults +
-                '}';
-    }
 }

@@ -1,53 +1,27 @@
 package pl.sda;
 
-import com.google.gson.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import pl.sda.model.GameType;
-import pl.sda.model.Games;
+
+import pl.sda.checker.Checker;
+import pl.sda.checker.NumberChecker;
+import pl.sda.input.*;
+import pl.sda.model.Game;
+import pl.sda.network.GameApi;
+import pl.sda.network.LottoGameApi;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class App {
 
     public static void main(String[] args) throws IOException {
-        //https://www.lotto.pl/api/lotteries/draw-results/by-gametype?game=Lotto&index=1&size=15&sort=drawDate&order=DESC
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-                    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        MyScanner scanner = new MyScanner();
+        Input userInput = new UserInput(scanner, new DefaultTypeProvider(scanner));
+        InputResult inputResult = userInput.getInputResults();
 
-                    @Override
-                    public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                            throws JsonParseException {
-                        return LocalDateTime.parse(json.getAsString(), formatter);
-                    }
-                })
-                .registerTypeAdapter(GameType.class, new JsonDeserializer<GameType>() {
+        GameApi api = new LottoGameApi();
+        Game game = api.getLastGame(inputResult.getType());
 
-                    @Override
-                    public GameType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                        return GameType.getTypeByName(json.getAsString());
-                    }
-                })
-                .create();
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("https://www.lotto.pl/api/lotteries/draw-results/by-gametype?game=Lotto&index=1&size=15&sort=drawDate&order=DESC")
-                .build();
-
-        Response response = client.newCall(request).execute();
-        String stringResponse = response.body().string();
-
-        Games dataFromBackend = gson.fromJson(stringResponse, Games.class);
-
-        System.out.println(dataFromBackend);
-
+        Checker numberChecker = new NumberChecker();
+        numberChecker.check(inputResult.getNumbers(), game.getNumbers());
     }
-}
 
+}
